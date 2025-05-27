@@ -1,16 +1,17 @@
-import type { Metadata } from "next";
-import { Bricolage_Grotesque } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Bricolage_Grotesque } from 'next/font/google';
+import './globals.css';
 import Navbar from '@/components/Navbar';
+import { twMerge } from 'tailwind-merge';
 
 const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
-  subsets: ["latin"],
+  variable: '--font-bricolage',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: "Converso",
-  description: "Real-time AI Teaching Platform",
+  title: 'Converso',
+  description: 'Real-time AI Teaching Platform',
 };
 
 export default function RootLayout({
@@ -22,7 +23,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${bricolage.variable} antialiased`}>
         <Navbar />
-        {children}</body>
+        {children}
+      </body>
     </html>
   );
 }
