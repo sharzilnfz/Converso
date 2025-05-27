@@ -1,9 +1,11 @@
 import React from 'react';
+import { Button } from '@/components/ui/button';
 
 const Page = () => {
   return (
-    <div>
+    <div> 
       <h1 className="text-2xl underline">welcome</h1>
+      <Button>Let's get Started</Button>
     </div>
   );
 };
