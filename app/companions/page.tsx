@@ -1,9 +1,5 @@
-
-
 const companionsLibrary = () => {
-  return (
-    <div>page</div>
-  )
-}
+  return <div> </div>;
+};
 
-export default companionsLibrary
+export default companionsLibrary;
