@@ -63,7 +63,5 @@ export const getCompanions = async (id: string) => {
     .eq('id', id);
 
   if (error) throw new Error(error.message);
-
-  return data;
-  return [0];
+  return data[0];
 };
