@@ -1,11 +1,4 @@
 'use client';
-import { subjects } from '@/constants';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { Textarea } from './ui/textarea';
-import { createCompanion } from '@/lib/actions/companion.actions';
-import { redirect } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -23,6 +16,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { subjects } from '@/constants';
+import { createCompanion } from '@/lib/actions/companion.actions';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { redirect } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Textarea } from './ui/textarea';
 
 const formSchema = z.object({
   name: z.string().min(1, { message: 'Companion is required' }),
@@ -143,8 +143,8 @@ const CompanionForm = () => {
                     <SelectValue placeholder="Select the Voice" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="make">Male</SelectItem>
-                    <SelectItem value="femake">Female</SelectItem>
+                    <SelectItem value="male">Male</SelectItem>
+                    <SelectItem value="female">Female</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>

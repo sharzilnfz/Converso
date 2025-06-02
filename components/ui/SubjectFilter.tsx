@@ -1,7 +1,5 @@
 'use client';
 
-import React from 'react';
-import { subjects } from '@/constants';
 import {
   Select,
   SelectContent,
@@ -9,10 +7,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { subjects } from '@/constants';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import { formUrlQuery, removeKeysFromUrlQuery } from '@jsmastery/utils';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const SubjectFilter = () => {
   const router = useRouter();
@@ -40,10 +39,10 @@ const SubjectFilter = () => {
 
   return (
     <Select value={subject} onValueChange={setSubject}>
-      <SelectTrigger className="input capitalize">
+      <SelectTrigger className="input capitalize w-[180px]">
         <SelectValue placeholder="Select Subjects" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="">
         <SelectItem value="all">All subjects</SelectItem>
 
         {subjects.map((subject) => (
