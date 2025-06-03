@@ -1,7 +1,7 @@
-import { subjectsColors, voices } from '@/constants';
-import { CreateAssistantDTO } from '@vapi-ai/web/dist/api';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { subjectsColors, voices } from "@/constants";
+import { CreateAssistantDTO } from "@vapi-ai/web/dist/api";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -12,38 +12,21 @@ export const getSubjectColor = (subject: string) => {
 };
 
 export const configureAssistant = (voice: string, style: string) => {
-  // Map old incorrect values to correct ones
-  const voiceMapping: { [key: string]: string } = {
-    make: 'male',
-    femake: 'female',
-    male: 'male',
-    female: 'female',
-  };
-
-  // Ensure voice and style are valid, provide defaults if not
-  const mappedVoice = voiceMapping[voice] || 'female';
-  const validVoice = voices[mappedVoice as keyof typeof voices]
-    ? mappedVoice
-    : 'female';
-  const validStyle =
-    style && ['casual', 'formal'].includes(style) ? style : 'casual';
-
-  const voiceId =
-    voices[validVoice as keyof typeof voices][
-      validStyle as keyof (typeof voices)[keyof typeof voices]
-    ] || 'sarah';
+  const voiceId = voices[voice as keyof typeof voices][
+          style as keyof (typeof voices)[keyof typeof voices]
+          ] || "sarah";
 
   const vapiAssistant: CreateAssistantDTO = {
-    name: 'Companion',
+    name: "Companion",
     firstMessage:
-      "Hello, let's start the session. Today we'll be talking about {{topic}}.",
+        "Hello, let's start the session. Today we'll be talking about {{topic}}.",
     transcriber: {
-      provider: 'deepgram',
-      model: 'nova-3',
-      language: 'en',
+      provider: "deepgram",
+      model: "nova-3",
+      language: "en",
     },
     voice: {
-      provider: '11labs',
+      provider: "11labs",
       voiceId: voiceId,
       stability: 0.4,
       similarityBoost: 0.8,
@@ -52,11 +35,11 @@ export const configureAssistant = (voice: string, style: string) => {
       useSpeakerBoost: true,
     },
     model: {
-      provider: 'openai',
-      model: 'gpt-4',
+      provider: "openai",
+      model: "gpt-4",
       messages: [
         {
-          role: 'system',
+          role: "system",
           content: `You are a highly knowledgeable tutor teaching a real-time voice session with a student. Your goal is to teach the student about the topic and subject.
 
                     Tutor Guidelines:
@@ -71,6 +54,8 @@ export const configureAssistant = (voice: string, style: string) => {
         },
       ],
     },
+    clientMessages: [],
+    serverMessages: [],
   };
   return vapiAssistant;
 };

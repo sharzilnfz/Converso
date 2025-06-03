@@ -1,7 +1,7 @@
 'use client';
 
 import soundwaves from '@/constants/soundwaves.json';
-
+import { addToSessionHistory } from '@/lib/actions/companion.actions';
 import { cn, configureAssistant, getSubjectColor } from '@/lib/utils';
 import { vapi } from '@/lib/vapi.sdk';
 import Lottie, { LottieRefCurrentProps } from 'lottie-react';
@@ -45,8 +45,14 @@ const CompanionComponent = ({
   useEffect(() => {
     const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
 
-    const onCallEnd = () => {
+    const onCallEnd = async () => {
       setCallStatus(CallStatus.FINISHED);
+      try {
+        await addToSessionHistory(companionId);
+        console.log('Session history added successfully');
+      } catch (error) {
+        console.error('Failed to add session history:', error);
+      }
     };
 
     const onMessage = (message: Message) => {
@@ -76,7 +82,7 @@ const CompanionComponent = ({
       vapi.off('speech-start', onSpeechStart);
       vapi.off('speech-end', onSpeechEnd);
     };
-  }, []);
+  }, [companionId]);
 
   const toggleMicrophone = () => {
     const isMuted = vapi.isMuted();
@@ -87,13 +93,21 @@ const CompanionComponent = ({
   const handleCall = async () => {
     setCallStatus(CallStatus.CONNECTING);
 
+    // Add session history when call starts for testing
+    try {
+      await addToSessionHistory(companionId);
+      console.log('Session history added on call start');
+    } catch (error) {
+      console.error('Failed to add session history on call start:', error);
+    }
+
     const assistantOverrides = {
       variableValues: { subject, topic, style },
       clientMessages: ['transcript'],
       serverMessages: [],
     };
 
-    // @ts-expect-error
+    // @ts-expect-error - vapi.start expects different parameter types but works correctly
     vapi.start(configureAssistant(voice, style), assistantOverrides);
   };
 

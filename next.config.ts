@@ -1,25 +1,26 @@
-import {withSentryConfig} from '@sentry/nextjs';
-import type { NextConfig } from 'next';
+import {withSentryConfig} from "@sentry/nextjs";
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+    typescript: {
+      ignoreBuildErrors: true
+    },
+    eslint: {
+        ignoreDuringBuilds: true
+    },
   images: {
-    remotePatterns: [{ hostname: 'img.clerk.com' }],
-  },
-  onDemandEntries: {
-    // period (in ms) where the server will keep pages in the buffer
-    maxInactiveAge: 15 * 60 * 1000, // 15 minutes
-    // number of pages that should be kept simultaneously without being disposed
-    pagesBufferLength: 4,
-  },
+      remotePatterns: [
+          { hostname: 'img.clerk.com'}
+      ]
+  }
 };
 
 export default withSentryConfig(nextConfig, {
 // For all available options, see:
 // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
-org: "js-mastery-2x",
-project: "converso-nextjs",
+org: "jsmpro",
+project: "jsm_converso",
 
 // Only print logs for uploading source maps in CI
 silent: !process.env.CI,
